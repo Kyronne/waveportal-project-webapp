@@ -14,7 +14,7 @@ const getEthereumObject = () => window.ethereum;
 export default function App() {
   const [currentAccount, setCurrentAccount] = useState("");
 
-  const contractAddress = "0x45B4e98ea181f80b2EEDabF9Ef157EEaEb25a2";
+  const contractAddress = "0xd8E6BDDbBC8F04aD70406fF334fC5713dB59F260";
   const contractABI = abi.abi;
   
   const checkIfWalletIsConnected = async () => {
