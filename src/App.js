@@ -13,8 +13,8 @@ const findMetaMaskAccount = async () => {
     const ethereum = getEthereumObject();
 
     /*
-    * First make sure we have access to the Ethereum object.
-    */
+     * First make sure we have access to the Ethereum object.
+     */
     if (!ethereum) {
       console.error("Make sure you have Metamask!");
       return null;
@@ -38,16 +38,37 @@ const findMetaMaskAccount = async () => {
 };
 
 export default function App() {
+  const [currentAccount, setCurrentAccount] = useState("");
 
-  const wave = (() => {
-    const ethereum = getEthereumObject();
-    if (!ethereum) {
-      console.log("Make sure you have metamask!");
-    } else {
-      console.log("We have the ethereum object", ethereum);
+  const connectWallet = async () => {
+    try {
+      const ethereum = getEthereumObject();
+      if (!ethereum) {
+        alert("Get MetaMask!");
+        return;
+      }
+
+      const accounts = await ethereum.request({
+        method: "eth_requestAccounts",
+      });
+
+      console.log("Connected", accounts[0]);
+      setCurrentAccount(accounts[0]);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  /*
+   * This runs our function when the page loads.
+   * More technically, when the App component "mounts".
+   */
+  useEffect(async () => {
+    const account = await findMetaMaskAccount();
+    if (account !== null) {
+      setCurrentAccount(account);
     }
   }, []);
-
 
   return (
     <div className="mainContainer">
