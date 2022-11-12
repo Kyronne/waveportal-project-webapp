@@ -6,11 +6,7 @@ const getEthereumObject = () => window.ethereum;
 
 export default function App() {
 
-  const wave = () => {
-    
-  }
-
-  useEffect(() => {
+  const wave = (() => {
     const ethereum = getEthereumObject();
     if (!ethereum) {
       console.log("Make sure you have metamask!");
@@ -18,7 +14,8 @@ export default function App() {
       console.log("We have the ethereum object", ethereum);
     }
   }, []);
-  
+
+
   return (
     <div className="mainContainer">
 
