@@ -4,6 +4,10 @@ import './App.css';
 
 const getEthereumObject = () => window.ethereum;
 
+/*
+ * This function returns the first linked account found.
+ * If there is no account linked, it will return null.
+ */
 const findMetaMaskAccount = async () => {
   try {
     const ethereum = getEthereumObject();
@@ -29,11 +33,11 @@ const findMetaMaskAccount = async () => {
     }
   } catch (error) {
     console.error(error);
-   
-
+    return null;
+  }
+};
 
 export default function App() {
-
   const [currentAccount, setCurrentAccount] = useState("");
 
   /*
@@ -47,7 +51,6 @@ export default function App() {
     }
   }, []);
 
-  const wave = () => {
     
   }
   
@@ -69,4 +72,6 @@ export default function App() {
       </div>
     </div>
   );
-}
+};
+
+
