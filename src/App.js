@@ -82,10 +82,18 @@ export default function App() {
         I am Kye and I'm learning blockchain development and I'm currently working as a blockchain analyst. Connect your Ethereum wallet and wave at me!
         </div>
 
-        <button className="waveButton" onClick={wave}>
+        <button className="waveButton" onClick={null}>
           Wave at Me
         </button>
+        {/*
+        * If there is no currentAccount render this button
+        */}
+        {!currentAccount && (
+          <button className="waveButton" onClick={connectWallet}>
+            Connect Wallet
+          </button>
+        )}  
       </div>
     </div>
   );
-}
+};
