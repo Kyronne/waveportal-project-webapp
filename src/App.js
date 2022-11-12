@@ -15,30 +15,51 @@ export default function App() {
   const [currentAccount, setCurrentAccount] = useState("");
 
   const contractAddress = "0x45B4e98ea181f80b2EEDabF9Ef157EEaEb25a2";
-
   const contractABI = abi.abi;
+  
+  const checkIfWalletIsConnected = async () => {
+    try {
+      const { ethereum } = window;
+
+      if (!ethereum) {
+        console.log("Make sure you have metamask!");
+        return;
+      } else {
+        console.log("We have the ethereum object", ethereum);
+      }
+
+      const accounts = await ethereum.request({ method: 'eth_accounts' });
+
+      if (accounts.length !== 0) {
+        const account = accounts[0];
+        console.log("Found an authorized account:", account);
+        setCurrentAccount(account)
+      } else {
+        console.log("No authorized account found")
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   const connectWallet = async () => {
     try {
-      const ethereum = getEthereumObject();
+      const { ethereum } = window;
+
       if (!ethereum) {
         alert("Get MetaMask!");
         return;
       }
 
-      const accounts = await ethereum.request({
-        method: "eth_requestAccounts",
-      });
+      const accounts = await ethereum.request({ method: "eth_requestAccounts" });
 
       console.log("Connected", accounts[0]);
-      setCurrentAccount(accounts[0]);
+      setCurrentAccount(accounts[0]); 
     } catch (error) {
-      console.error(error);
+      console.log(error)
     }
-  };
-  /*
-  This connects the wave button to our contract
-  */
+  }
+
   const wave = async () => {
     try {
       const { ethereum } = window;
@@ -50,52 +71,26 @@ export default function App() {
 
         let count = await wavePortalContract.getTotalWaves();
         console.log("Retrieved total wave count...", count.toNumber());
+
+        const waveTxn = await wavePortalContract.wave();
+        console.log("Mining...", waveTxn.hash);
+
+        await waveTxn.wait();
+        console.log("Mined -- ", waveTxn.hash);
+
+        count = await wavePortalContract.getTotalWaves();
+        console.log("Retrieved total wave count...", count.toNumber());
       } else {
         console.log("Ethereum object doesn't exist!");
       }
     } catch (error) {
-      console.log(error);
+      console.log(error)
     }
-}
-  const findMetaMaskAccount = async () => {
-  try {
-    const ethereum = getEthereumObject();
-
-    /*
-     * First make sure we have access to the Ethereum object.
-     */
-    if (!ethereum) {
-      console.error("Make sure you have Metamask!");
-      return null;
-    }
-
-    console.log("We have the Ethereum object", ethereum);
-    const accounts = await ethereum.request({ method: "eth_accounts" });
-
-    if (accounts.length !== 0) {
-      const account = accounts[0];
-      console.log("Found an authorized account:", account);
-      return account;
-    } else {
-      console.error("No authorized account found");
-      return null;
-    }
-  } catch (error) {
-    console.error(error);
-    return null;
   }
-  };
 
-  /*
-   * This runs our function when the page loads.
-   * More technically, when the App component "mounts".
-   */
-  useEffect(async () => {
-    const account = await findMetaMaskAccount();
-    if (account !== null) {
-      setCurrentAccount(account);
-    }
-  }, []);
+  useEffect(() => {
+    checkIfWalletIsConnected();
+  }, [])
 
   return (
     <div className="mainContainer">
