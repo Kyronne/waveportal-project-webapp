@@ -37,7 +37,7 @@ const findMetaMaskAccount = async () => {
   }
 };
 
-export default function App() {
+const  App = () => {
   const [currentAccount, setCurrentAccount] = useState("");
 
   const connectWallet = async () => {
@@ -97,3 +97,5 @@ export default function App() {
     </div>
   );
 };
+
+export default App; 
