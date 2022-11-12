@@ -29,11 +29,11 @@ const findMetaMaskAccount = async () => {
     }
   } catch (error) {
     console.error(error);
-    return null;
-  }
-};
+   
 
-const App = () => {
+
+export default function App() {
+
   const [currentAccount, setCurrentAccount] = useState("");
 
   /*
@@ -46,6 +46,10 @@ const App = () => {
       setCurrentAccount(account);
     }
   }, []);
+
+  const wave = () => {
+    
+  }
   
   return (
     <div className="mainContainer">
@@ -65,6 +69,4 @@ const App = () => {
       </div>
     </div>
   );
-};
-
-export default App;
+}
