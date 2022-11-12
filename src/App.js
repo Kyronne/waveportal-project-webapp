@@ -49,10 +49,7 @@ export default function App() {
     if (account !== null) {
       setCurrentAccount(account);
     }
-  }, []);
-
-    
-  }
+  }, []); 
   
   return (
     <div className="mainContainer">
