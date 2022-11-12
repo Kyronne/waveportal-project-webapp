@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useEffect, useState } from "react";
 import { ethers } from "ethers";
 import './App.css';
 
@@ -37,7 +37,7 @@ const findMetaMaskAccount = async () => {
   }
 };
 
-const  App = () => {
+export default function App() {
   const [currentAccount, setCurrentAccount] = useState("");
 
   const connectWallet = async () => {
@@ -97,5 +97,3 @@ const  App = () => {
     </div>
   );
 };
-
-export default App; 
