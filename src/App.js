@@ -13,6 +13,7 @@ const getEthereumObject = () => window.ethereum;
 
 export default function App() {
   const [currentAccount, setCurrentAccount] = useState("");
+  const [totalWaves, setTotalWaves] = useState("");
 
   const contractAddress = "0xd8E6BDDbBC8F04aD70406fF334fC5713dB59F260";
   const contractABI = abi.abi;
@@ -107,6 +108,7 @@ export default function App() {
         <button className="waveButton" onClick={wave}>
           Wave at Me
         </button>
+
         {/*
         * If there is no currentAccount render this button
         */}
@@ -115,6 +117,7 @@ export default function App() {
             Connect Wallet
           </button>
         )}  
+        <p>{ totalWaves } have waved at me so far :)</p>
       </div>
     </div>
   );
